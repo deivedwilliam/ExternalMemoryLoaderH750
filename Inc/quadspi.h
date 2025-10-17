@@ -1,54 +1,58 @@
-#ifndef W25Q128_QSPI_H
-#define W25Q128_QSPI_H
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file    quadspi.h
+  * @brief   This file contains all the function prototypes for
+  *          the quadspi.c file
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __QUADSPI_H__
+#define __QUADSPI_H__
 
 #ifdef __cplusplus
- extern "C" {
-#endif 
+extern "C" {
+#endif
 
+/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
- uint8_t CSP_QUADSPI_Init(void);
- uint8_t CSP_QSPI_EraseSector(uint32_t EraseStartAddress, uint32_t EraseEndAddress);
- uint8_t CSP_QSPI_WriteMemory(uint8_t* buffer, uint32_t address, uint32_t buffer_size);
- uint8_t CSP_QSPI_EnableMemoryMappedMode(void);
- uint8_t CSP_QSPI_Erase_Chip (void);
+/* USER CODE BEGIN Includes */
+#include "w25qxxx.h"
+/* USER CODE END Includes */
 
- /*N25Q256A memory parameters*/
- #define MEMORY_FLASH_SIZE               0x1000000 /* 256 MBits*/
- #define MEMORY_SECTOR_SIZE              0x10000   /* 64kBytes */
- #define MEMORY_PAGE_SIZE                0x100     /* 256 bytes */
+extern QSPI_HandleTypeDef hqspi;
 
- extern QSPI_HandleTypeDef hqspi;
+/* USER CODE BEGIN Private defines */
+#define	BULK_ERASE_MAX_TIME    		250000
+#define SECTOR_ERASE_MAX_TIME       3000
+/* USER CODE END Private defines */
 
- /*N25Q128A  commands */
-#define WRITE_ENABLE_CMD 0x06
-#define READ_STATUS_REG_CMD 0x05
-#define WRITE_VOL_CFG_REG_CMD 0x81
-#define SECTOR_ERASE_CMD 0xD8
-#define CHIP_ERASE_CMD 0xC7
-#define QUAD_IN_FAST_PROG_CMD 0x32
-#define READ_CONFIGURATION_REG_CMD 0x85
-#define EXT_QUAD_IN_FAST_PROG_CMD            0x12
-#define QUAD_OUT_FAST_READ_CMD 0xEB
-#define DUMMY_CLOCK_CYCLES_READ_QUAD 10
-#define RESET_ENABLE_CMD 0x66
-#define RESET_EXECUTE_CMD 0x99
+void MX_QUADSPI_Init(void);
 
-#define READ_VOL_CFG_REG_CMD                 0x85
+/* USER CODE BEGIN Prototypes */
 
-#define READ_STATUS_REGISTER_1	0x05
-#define READ_STATUS_REGISTER_2	0x35
-#define READ_STATUS_REGISTER_3	0x15
-
-#define WRITE_STATUS_REGISTER_1	0x01
-#define WRITE_STATUS_REGISTER_2	0x31
-#define WRITE_STATUS_REGISTER_3	0x11
-
-#define FAST_READ_QUAD_OUTPUT 0x6B
-
+uint8_t CSP_QUADSPI_Init(void);
+uint8_t CSP_QSPI_EraseSector(uint32_t EraseStartAddress, uint32_t EraseEndAddress);
+uint8_t CSP_QSPI_WriteMemory(uint8_t* buffer, uint32_t address, uint32_t buffer_size);
+uint8_t CSP_QSPI_EnableMemoryMappedMode(void);
+uint8_t CSP_QSPI_Erase_Chip (void);
+/* USER CODE END Prototypes */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif /* __QUADSPI_H__ */
+
